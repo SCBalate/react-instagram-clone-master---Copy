@@ -16,7 +16,20 @@ export const users = [
     password: "adarshBalika123",
     createdAt: formatDate(),
     updatedAt: formatDate(),
-    isFollow: true,
+    following: [
+      { _id: uuid(), fullName: "John Doe", username: "johndoe",profileAvatar:
+      "https://picsum.photos/id/1009/150" },
+    
+    
+    ],
+    followers: [
+      { _id: uuid(), fullName: "John Doe", username: "johndoe",profileAvatar:
+      "https://picsum.photos/id/1009/150" },
+      { _id: uuid(), fullName: "Ganesh Mokate", username: "Gunny",profileAvatar:
+      "https://picsum.photos/id/100/150" },
+      { _id: uuid(), fullName: "Shubham Shelke", username: "shubz",profileAvatar:
+      "https://picsum.photos/id/1005/150" },
+    ],
   },
   {
     _id: uuid(),
@@ -27,7 +40,23 @@ export const users = [
     password: "Sb@123",
     createdAt: formatDate(),
     updatedAt: formatDate(),
-    isFollow: true,
+    following: [
+     
+      { _id: uuid(), fullName: "John Doe", username: "johndoe",profileAvatar:
+      "https://picsum.photos/id/1009/150" },
+      { _id: uuid(), fullName: "Ganesh Mokate", username: "Gunny",profileAvatar:
+      "https://picsum.photos/id/100/150" },
+      { _id: uuid(), fullName: "Shubham Shelke", username: "shubz",profileAvatar:
+      "https://picsum.photos/id/1005/150" },
+    
+    
+    ],
+    followers: [
+      { _id: uuid(), fullName: "Ganesh Mokate", username: "Gunny",profileAvatar:
+      "https://picsum.photos/id/100/150" },
+      { _id: uuid(), fullName: "Shubham Shelke", username: "shubz",profileAvatar:
+      "https://picsum.photos/id/1005/150" },
+    ],
   },
   {
     _id: uuid(),
@@ -38,7 +67,20 @@ export const users = [
     password: "shubh@123",
     createdAt: formatDate(),
     updatedAt: formatDate(),
-    isFollow: true,
+    following: [
+      { _id: uuid(), fullName: "John Doe", username: "John Doe",profileAvatar:
+      "https://picsum.photos/id/1009/150" },
+      { _id: uuid(), fullName: "Saurabh Balate", username: "savvy",profileAvatar:
+      "https://picsum.photos/id/1009/150" },
+    
+    ],
+    followers: [
+      { _id: uuid(), fullName: "John Doe", username: "John Doe",profileAvatar:
+      "https://picsum.photos/id/1009/150" },
+      { _id: uuid(), fullName: "Shubham Shelke", username: "Shubz",profileAvatar:
+      "https://picsum.photos/id/100/150" },
+      
+    ],
   },
   {
     _id: uuid(),
@@ -49,7 +91,21 @@ export const users = [
     password: "Ganesh@123",
     createdAt: formatDate(),
     updatedAt: formatDate(),
-    isFollow: false,
+    following: [
+      { _id: uuid(), fullName: "John Doe", username: "John Doe",profileAvatar:
+      "https://picsum.photos/id/1009/150" },
+      { _id: uuid(), fullName: "Saurabh Balate", username: "savvy",profileAvatar:
+      "https://picsum.photos/id/1009/150" },
+    
+    ],
+    followers: [
+      { _id: uuid(), fullName: "John Doe", username: "johndoe",profileAvatar:
+      "https://picsum.photos/id/1009/150" },
+      { _id: uuid(), fullName: "Ganesh Mokate", username: "Gunny",profileAvatar:
+      "https://picsum.photos/id/100/150" },
+      { _id: uuid(), fullName: "Shubham Shelke", username: "shubz",profileAvatar:
+      "https://picsum.photos/id/1005/150" },
+    ],
   },
   {
     _id: uuid(),
@@ -60,7 +116,13 @@ export const users = [
     password: "Mandy@123",
     createdAt: formatDate(),
     updatedAt: formatDate(),
-    isFollow: true,
+    following: [
+    
+    
+    ],
+    followers: [
+    
+    ],
   },
   {
     _id: uuid(),
@@ -71,7 +133,13 @@ export const users = [
     password: "Lara@123",
     createdAt: formatDate(),
     updatedAt: formatDate(),
-    isFollow: false,
+    following: [
+    
+    
+    ],
+    followers: [
+    
+    ],
   },
 ];
 

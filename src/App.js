@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { auth } from "./firebase";
 import { loginUser, setLoading } from "./features/userSlice";
+import { BrowserRouter, Route } from 'react-router-dom';
+import  BookmarkPage  from "./Bookmark";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,7 +38,12 @@ function App() {
           <div className="loader"></div>
         </div>
       ) : (
-        <>{user ? <Homepage /> : <Authenticate />}</>
+        // <>{user ? <Homepage /> : <Authenticate />}</>
+        <> 
+         <BrowserRouter>
+      <Route path="/" exact component={<Homepage />} />
+      <Route path="/about" component={<BookmarkPage/>} />
+    </BrowserRouter></>
       )}
     </div>
   );

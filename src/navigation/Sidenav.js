@@ -1,12 +1,11 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import "./Sidenav.css";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
 import ExploreIcon from "@mui/icons-material/Explore";
-import SlideshowIcon from "@mui/icons-material/Slideshow";
-import ChatIcon from "@mui/icons-material/Chat";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import MenuIcon from "@mui/icons-material/Menu";
 import { Avatar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,11 +15,18 @@ import { auth } from "../firebase";
 
 function Sidenav() {
   const user = useSelector((state) => state.data.user.user);
+  const history = useNavigate();
   const dispatch = useDispatch();
   const handelLogout = () => {
     dispatch(logoutUser());
     signOut(auth);
   };
+
+  
+  const handleBookmarkClick = () => {
+    history.push('/Bookmark'); 
+  };
+
   return (
     <div className="sidenav">
       <img
@@ -42,17 +48,9 @@ function Sidenav() {
           <ExploreIcon />
           <span>Explore</span>
         </button>
-        <button className="sidenav__button">
-          <SlideshowIcon />
-          <span>Reels</span>
-        </button>
-        <button className="sidenav__button">
-          <ChatIcon />
-          <span>Messages</span>
-        </button>
-        <button className="sidenav__button">
-          <FavoriteBorderIcon />
-          <span>Notifications</span>
+        <button className="sidenav__button" onClick={handleBookmarkClick}>
+          <TurnedInNotIcon />
+          <span>Bookmarks</span>
         </button>
         <button className="sidenav__button">
           <AddCircleOutlineIcon />
@@ -60,10 +58,10 @@ function Sidenav() {
         </button>
         <button className="sidenav__button">
           <Avatar>
-            {user.username ? user.username.charAt(0).toUpperCase() : "A"}
+            {user?.username ? user?.username.charAt(0).toUpperCase() : "A"}
           </Avatar>
           <span>
-            {user.username}{" "}
+            {user?.username}{" "}
             <button onClick={handelLogout} className="logout__button">
               Logout
             </button>
