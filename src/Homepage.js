@@ -3,14 +3,14 @@ import "./Homepage.css";
 import Sidenav from "./navigation/Sidenav";
 import Timeline from "./timeline/Timeline";
 
-function Homepage() {
+function Homepage({handleBookmark}) {
   return (
     <div className="homepage">
       <div className="homepage__navWraper">
         <Sidenav />
       </div>
       <div className="homepage__timeline">
-        <Timeline />
+        <Timeline handleBookmark ={ handleBookmark}/>
       </div>
     </div>
   );

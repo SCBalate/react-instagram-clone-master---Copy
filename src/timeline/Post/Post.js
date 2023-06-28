@@ -6,13 +6,14 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { posts } from "../../Backend/db/posts";
 
-function Post({ user, postImage, likes, timestamp }) {
+function Post({ user, postImage, likes, timestamp, handleBookmark, bookmarkedPosts }) {
 
  
     const [count, setCount] = useState(7);
     const [increase, setIncrease] = useState(true);
-    const [bookMark , setBookmark] = useState(true);
+       const [bookMark , setBookmark] = useState(true);
 
     const handleLikeToggle = () => {
       if (increase) {
@@ -54,7 +55,7 @@ setBookmark(!bookMark)
           </div>
          
           <div className="post__iconSave">
-            <BookmarkBorderIcon className={bookMark ? 'removeBookmark-button postIcon' : ' addBookmark-button postIcon'} onClick={handleBookMarkToggle}/>
+            <BookmarkBorderIcon className={bookMark ? 'removeBookmark-button postIcon' : ' addBookmark-button postIcon'} handleBookmark={() => handleBookmark(posts)}   />
           </div>
         </div>
          {count} likes

@@ -15,17 +15,22 @@ import { auth } from "../firebase";
 
 function Sidenav() {
   const user = useSelector((state) => state.data.user.user);
-  const history = useNavigate();
+ 
   const dispatch = useDispatch();
   const handelLogout = () => {
     dispatch(logoutUser());
     signOut(auth);
   };
 
-  
+  const navigate = useNavigate();
+
   const handleBookmarkClick = () => {
-    history.push('/Bookmark'); 
+    navigate('/Bookmark'); 
   };
+
+  const handleHomeClick = () => {
+    navigate('/');
+  }
 
   return (
     <div className="sidenav">
@@ -36,7 +41,7 @@ function Sidenav() {
       />
 
       <div className="sidenav__buttons">
-        <button className="sidenav__button">
+        <button className="sidenav__button" onClick={handleHomeClick}>
           <HomeIcon />
           <span>Home</span>
         </button>
@@ -56,7 +61,7 @@ function Sidenav() {
           <AddCircleOutlineIcon />
           <span>Create</span>
         </button>
-        <button className="sidenav__button">
+        <div className="sidenav__button">
           <Avatar>
             {user?.username ? user?.username.charAt(0).toUpperCase() : "A"}
           </Avatar>
@@ -66,7 +71,7 @@ function Sidenav() {
               Logout
             </button>
           </span>
-        </button>
+        </div>
       </div>
       <div className="sidenav__more">
         <button className="sidenav__button">

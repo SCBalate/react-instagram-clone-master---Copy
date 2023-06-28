@@ -1,15 +1,19 @@
 import "./App.css";
 import Homepage from "./Homepage";
+import BookmarkPage from "./Bookmark/Bookmark";
 import Authenticate from "./authenticate/Authenticate";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { auth } from "./firebase";
 import { loginUser, setLoading } from "./features/userSlice";
-import { BrowserRouter, Route } from 'react-router-dom';
-import  BookmarkPage  from "./Bookmark";
+import { BrowserRouter, Route,Routes, Navigate } from 'react-router-dom';
+
+
 
 function App() {
   const dispatch = useDispatch();
+
+
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
@@ -29,6 +33,8 @@ function App() {
     });
   }, []);
 
+ 
+
   const user = useSelector((state) => state.data.user.user);
   const isLoading = useSelector((state) => state.data.user.isLoading);
   return (
@@ -38,11 +44,16 @@ function App() {
           <div className="loader"></div>
         </div>
       ) : (
-        // <>{user ? <Homepage /> : <Authenticate />}</>
-        <> 
+        <>
          <BrowserRouter>
-      <Route path="/" exact component={<Homepage />} />
-      <Route path="/about" component={<BookmarkPage/>} />
+         <Routes>
+        {user ? <Route path="/" exact component={<Authenticate />} /> : <Route path="*" exact component={<Homepage />} />}
+        
+        <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="/" element={<Homepage />} />
+      {/* <Route path="/" exact component={<Homepage />} /> */}
+      <Route path="/Bookmark" element={<BookmarkPage />} />
+      </Routes>
     </BrowserRouter></>
       )}
     </div>

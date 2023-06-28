@@ -165,7 +165,7 @@ export const posts = [
       ]
   },
   {
-    _id: uuid(),
+    _id: 1,
     content:"",
       likes: {
         likeCount: 0,
@@ -181,7 +181,7 @@ export const posts = [
       comments:[]
   },
   {
-    _id: uuid(),
+    _id: 2,
    content:"",
       likes: {
         likeCount: 0,

@@ -1,0 +1,18 @@
+.bookmarkPage{
+    display: flex;
+    flex-direction: row;
+}
+
+.bookmarkpage__navWraper{
+    position:relative;
+    flex:0.2
+}
+.bookmarkpage_content{
+    display:flex;
+    flex:0.6
+}
+
+.bookmarkpage_suggestion{
+    /* display:flex; */
+    flex:0.2
+}
