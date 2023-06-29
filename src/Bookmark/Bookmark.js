@@ -3,6 +3,7 @@ import "./Bookmark.css";
 import Sidenav from '../navigation/Sidenav';
 // import Timeline from '../timeline/Timeline';
 import Suggestions from '../timeline/Suggestions';
+import BookmarkedPosts from './Bookmarkpost';
 // const BookmarkPage = ({ bookmarkedPosts }) => {
 //   return (
 //     <div>
@@ -23,7 +24,7 @@ const BookmarkPage =() =>{
      <div className="bookmarkpage__navWraper">
         <Sidenav />
       </div>
-      <div className="bookmarkpage_content">Hello I am Bookmark page</div>
+      <div className="bookmarkpage_content"><BookmarkedPosts/></div>
       <div className="bookmarkpage__suggestion">
         {/* <Timeline /> */}
         <Suggestions/>

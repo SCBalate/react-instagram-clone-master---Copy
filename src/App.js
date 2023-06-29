@@ -13,7 +13,7 @@ import { BrowserRouter, Route,Routes, Navigate } from 'react-router-dom';
 function App() {
   const dispatch = useDispatch();
 
-
+const[post,setPosts]= useState([]);
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
@@ -33,7 +33,19 @@ function App() {
     });
   }, []);
 
- 
+  function toggleBookmark(postId) {
+    // Make an API request to toggle the bookmark status
+   
+    fetch(` api/users/bookmark/:postId/`, { method: 'POST' })
+      .then(response => response.json())
+      .then(updatedPost => {
+        setPosts(prevPosts =>
+          prevPosts.map(post =>
+            post.id === updatedPost.id ? updatedPost : post
+          )
+        );
+      });
+  }
 
   const user = useSelector((state) => state.data.user.user);
   const isLoading = useSelector((state) => state.data.user.isLoading);
@@ -50,7 +62,7 @@ function App() {
         {user ? <Route path="/" exact component={<Authenticate />} /> : <Route path="*" exact component={<Homepage />} />}
         
         <Route path="*" element={<Navigate to="/" replace />} />
-            <Route path="/" element={<Homepage />} />
+            <Route path="/" element={<Homepage key={post.id} post={post} toggleBookmark={toggleBookmark}/>} />
       {/* <Route path="/" exact component={<Homepage />} /> */}
       <Route path="/Bookmark" element={<BookmarkPage />} />
       </Routes>

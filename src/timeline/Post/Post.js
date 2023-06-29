@@ -8,7 +8,7 @@ import TelegramIcon from "@mui/icons-material/Telegram";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { posts } from "../../Backend/db/posts";
 
-function Post({ user, postImage, likes, timestamp, handleBookmark, bookmarkedPosts }) {
+function Post({ user, postImage, likes, timestamp, toggleBookmark, bookmarkedPosts ,post}) {
 
  
     const [count, setCount] = useState(7);
@@ -29,14 +29,14 @@ setBookmark(!bookMark)
     }
    
 
-  
+  posts.map(x=>{})
   return (
     <div className="post">
       <div className="post__header">
         <div className="post__headerAuthor">
-          <Avatar style={{ marginRight: "10px" }}>
+          {/* <Avatar style={{ marginRight: "10px" }}>
             {user.charAt(0).toUpperCase()}
-          </Avatar>{" "}
+          </Avatar>{" "} */}
           {user} • <span>{timestamp}</span>
         </div>
         <MoreHorizIcon />
@@ -55,7 +55,7 @@ setBookmark(!bookMark)
           </div>
          
           <div className="post__iconSave">
-            <BookmarkBorderIcon className={bookMark ? 'removeBookmark-button postIcon' : ' addBookmark-button postIcon'} handleBookmark={() => handleBookmark(posts)}   />
+            <BookmarkBorderIcon className={bookMark ? 'removeBookmark-button postIcon' : ' addBookmark-button postIcon'} onClick={() => toggleBookmark(post)}   />
           </div>
         </div>
          {count} likes

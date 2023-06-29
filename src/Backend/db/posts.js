@@ -21,6 +21,7 @@ export const posts = [
     "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
     createdAt: "2023/06/12",
     updatedAt: formatDate(),
+    isArchived: true,
     comments: [
       {
         _id: uuid(),
@@ -63,6 +64,7 @@ export const posts = [
     "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
     createdAt: "2023/06/21",
     updatedAt: formatDate(),
+    isArchived: false,
     comments: [
       {
         _id: uuid(),
@@ -104,6 +106,7 @@ export const posts = [
       "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
       createdAt: "2023/06/22",
       updatedAt: formatDate(),
+      isArchived: false,
       comments: [
         {
           _id: uuid(),
@@ -148,6 +151,7 @@ export const posts = [
       "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&w=1000&q=80",
       createdAt: "2023/06/20",
       updatedAt: formatDate(),
+      isArchived: false,
       comments: [
         {
           
@@ -178,6 +182,7 @@ export const posts = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
       createdAt: "2023/05/20",
       updatedAt: formatDate(),
+      isArchived: false,
       comments:[]
   },
   {
