@@ -6,12 +6,12 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import { posts } from "../../Backend/db/posts";
 
-function Post({ user, postImage, likes, timestamp, toggleBookmark, bookmarkedPosts ,post}) {
+
+function Post({ user, postImage, likes, timestamp, toggleBookmark ,post}) {
 
  
-    const [count, setCount] = useState(7);
+    const [count, setCount] = useState(likes.likeCount);
     const [increase, setIncrease] = useState(true);
        const [bookMark , setBookmark] = useState(true);
 
@@ -23,20 +23,22 @@ function Post({ user, postImage, likes, timestamp, toggleBookmark, bookmarkedPos
       }
       setIncrease(!increase);
     };
-  
+  console.log(likes);
     const handleBookMarkToggle =()=>{
 setBookmark(!bookMark)
     }
    
 
-  posts.map(x=>{})
+// console.log("This is user"+user)
+
   return (
+  
     <div className="post">
       <div className="post__header">
         <div className="post__headerAuthor">
-          {/* <Avatar style={{ marginRight: "10px" }}>
-            {user.charAt(0).toUpperCase()}
-          </Avatar>{" "} */}
+          <Avatar style={{ marginRight: "10px" }}>
+            {user ?.charAt(0).toUpperCase() }
+          </Avatar>{" "}
           {user} • <span>{timestamp}</span>
         </div>
         <MoreHorizIcon />
@@ -55,7 +57,7 @@ setBookmark(!bookMark)
           </div>
          
           <div className="post__iconSave">
-            <BookmarkBorderIcon className={bookMark ? 'removeBookmark-button postIcon' : ' addBookmark-button postIcon'} onClick={() => toggleBookmark(post)}   />
+            <BookmarkBorderIcon className={bookMark ? 'removeBookmark-button postIcon' : ' addBookmark-button postIcon'} onClick={ toggleBookmark}   />
           </div>
         </div>
          {count} likes

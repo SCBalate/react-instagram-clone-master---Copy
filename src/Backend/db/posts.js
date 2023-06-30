@@ -11,7 +11,7 @@ export const posts = [
     _id: uuid(),
    content:"A beautiful natural sunset scenery",
     likes: {
-      likeCount: 0,
+      likeCount: 10,
       likedBy: [],
       dislikedBy: [],
     },
@@ -54,7 +54,7 @@ export const posts = [
     _id: uuid(),
    content:"The power of nokia mobiles",
     likes: {
-      likeCount: 0,
+      likeCount: 20,
       likedBy: [],
       dislikedBy: [],
     },
@@ -96,7 +96,7 @@ export const posts = [
     _id: uuid(),
    content:"Enjoying a sunset like this...",
       likes: {
-        likeCount: 0,
+        likeCount: 7,
         likedBy: [],
         dislikedBy: [],
       },
@@ -141,7 +141,7 @@ export const posts = [
     _id: uuid(),
    content:"",
       likes: {
-        likeCount: 0,
+        likeCount: 55,
         likedBy: [],
         dislikedBy: [],
       },
@@ -172,7 +172,7 @@ export const posts = [
     _id: 1,
     content:"",
       likes: {
-        likeCount: 0,
+        likeCount: 77 ,
         likedBy: [],
         dislikedBy: [],
       },
@@ -189,7 +189,7 @@ export const posts = [
     _id: 2,
    content:"",
       likes: {
-        likeCount: 0,
+        likeCount: 2,
         likedBy: [],
         dislikedBy: [],
       },

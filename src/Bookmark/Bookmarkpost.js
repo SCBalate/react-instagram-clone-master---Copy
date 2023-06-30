@@ -38,7 +38,7 @@ import Post from "../timeline/Post/Post";
 //     );
 //   }
 
-function BookmarkedPosts() {
+function BookmarkedPosts({toggleBookmark}) {
     const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
   
     useEffect(() => {
@@ -50,18 +50,20 @@ function BookmarkedPosts() {
       fetch('/api/posts')
         .then(response => response.json())
         .then(posts => {
-         console.log(posts)
+        //  console.log(posts)
           const bookmarked = posts.posts.filter((x)=>x.isArchived);
-          console.log(bookmarked);
+          // console.log(bookmarked);
           setBookmarkedPosts(bookmarked);
         });
     }
-  
+ 
     return (
       <div>
         <h2>Bookmarked Posts</h2>
         {bookmarkedPosts.map(post => (
-          <Post key={post?.id} post={post} toggleBookmark={() => {}} />
+          <Post key={post?._id} user={post?.username}  postImage={post?.postImage}
+          likes={post?.likes}
+          timestamp={post?.createdAt} toggleBookmark={toggleBookmark} />
         ))}
       </div>
     );

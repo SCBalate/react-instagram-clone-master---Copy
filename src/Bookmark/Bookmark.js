@@ -17,14 +17,14 @@ import BookmarkedPosts from './Bookmarkpost';
 //     </div>
 //   );
 // };
-const BookmarkPage =() =>{
+const BookmarkPage =({toggleBookmark}) =>{
   return (
     <>
     <div className="bookmarkPage">
      <div className="bookmarkpage__navWraper">
         <Sidenav />
       </div>
-      <div className="bookmarkpage_content"><BookmarkedPosts/></div>
+      <div className="bookmarkpage_content"><BookmarkedPosts toggleBookmark={toggleBookmark}/></div>
       <div className="bookmarkpage__suggestion">
         {/* <Timeline /> */}
         <Suggestions/>

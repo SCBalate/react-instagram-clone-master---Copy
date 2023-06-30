@@ -7,13 +7,14 @@ import { useEffect, useState } from "react";
 import { auth } from "./firebase";
 import { loginUser, setLoading } from "./features/userSlice";
 import { BrowserRouter, Route,Routes, Navigate } from 'react-router-dom';
+import { posts } from "./Backend/db/posts";
 
 
 
 function App() {
   const dispatch = useDispatch();
 
-const[post,setPosts]= useState([]);
+const[bookmarkPost,setBookmarkedPosts]= useState([]);
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
@@ -35,18 +36,37 @@ const[post,setPosts]= useState([]);
 
   function toggleBookmark(postId) {
     // Make an API request to toggle the bookmark status
-   
-    fetch(` api/users/bookmark/:postId/`, { method: 'POST' })
-      .then(response => response.json())
+    fetch(`api/users/bookmark/:postId/`, { method: 'POST' })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Request failed with status ' + response.status);
+        }
+        return response.json();
+      })
       .then(updatedPost => {
-        setPosts(prevPosts =>
-          prevPosts.map(post =>
-            post.id === updatedPost.id ? updatedPost : post
-          )
-        );
+        // Update the value of `isArchived` to true
+        updatedPost.isArchived = true;
+  
+        setBookmarkedPosts(prevPosts => {
+          // Check if the post already exists in the bookmarked posts list
+          const postIndex = prevPosts.findIndex(post => post._id === updatedPost._id);
+          if (postIndex !== -1) {
+            // Post already exists, update it in the list
+            const updatedPosts = [...prevPosts];
+            updatedPosts[postIndex] = updatedPost;
+            return updatedPosts;
+          } else {
+            // Post doesn't exist, add it to the list
+            return [...prevPosts, updatedPost];
+          }
+        });
+      })
+      .catch(error => {
+        console.error('Error toggling bookmark:', error);
+        // Handle the error and provide user feedback
+        // For example, you can show a toast notification or display an error message on the UI
       });
   }
-
   const user = useSelector((state) => state.data.user.user);
   const isLoading = useSelector((state) => state.data.user.isLoading);
   return (
@@ -62,9 +82,9 @@ const[post,setPosts]= useState([]);
         {user ? <Route path="/" exact component={<Authenticate />} /> : <Route path="*" exact component={<Homepage />} />}
         
         <Route path="*" element={<Navigate to="/" replace />} />
-            <Route path="/" element={<Homepage key={post.id} post={post} toggleBookmark={toggleBookmark}/>} />
+            <Route path="/" element={<Homepage key={posts.id} post={posts} toggleBookmark={toggleBookmark}/>} />
       {/* <Route path="/" exact component={<Homepage />} /> */}
-      <Route path="/Bookmark" element={<BookmarkPage />} />
+      <Route path="/Bookmark" element={<BookmarkPage toggleBookmark={toggleBookmark}/>} />
       </Routes>
     </BrowserRouter></>
       )}
