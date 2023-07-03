@@ -32,6 +32,10 @@ function Sidenav() {
     navigate('/');
   }
 
+  const addNewPost =()=>{
+    navigate('/create new post');
+  }
+
   return (
     <div className="sidenav">
       <img
@@ -57,7 +61,7 @@ function Sidenav() {
           <TurnedInNotIcon />
           <span>Bookmarks</span>
         </button>
-        <button className="sidenav__button">
+        <button className="sidenav__button" onClick={addNewPost}>
           <AddCircleOutlineIcon />
           <span>Create</span>
         </button>

@@ -10,7 +10,7 @@ function Homepage({post , toggleBookmark}) {
         <Sidenav />
       </div>
       <div className="homepage__timeline">
-        <Timeline post={post} toggleBookmark={toggleBookmark}/>
+        <Timeline posts={post} toggleBookmark={toggleBookmark}/>
       </div>
     </div>
   );

@@ -7,13 +7,29 @@ import { useEffect, useState } from "react";
 import { auth } from "./firebase";
 import { loginUser, setLoading } from "./features/userSlice";
 import { BrowserRouter, Route,Routes, Navigate } from 'react-router-dom';
-import { posts } from "./Backend/db/posts";
-
+// import { posts } from "./Backend/db/posts";
+import Newpost from "./Newpost/Newpost";
 
 
 function App() {
   const dispatch = useDispatch();
+  const [post, setPost] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/posts');
+        
+        const jsonData = await response.json();
+        setPost(jsonData);
+        console.log(jsonData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 const[bookmarkPost,setBookmarkedPosts]= useState([]);
 
   useEffect(() => {
@@ -33,6 +49,17 @@ const[bookmarkPost,setBookmarkedPosts]= useState([]);
       }
     });
   }, []);
+
+  const handleAddPost = (newPost) => {
+    debugger
+    const postWithId = {
+      ...newPost,
+      id: Math.random().toString(), 
+      name:`${newPost?.name}`
+    };
+    setPost((prevPosts) => [...prevPosts, postWithId]);
+  };
+
 
   function toggleBookmark(postId) {
     // Make an API request to toggle the bookmark status
@@ -79,12 +106,13 @@ const[bookmarkPost,setBookmarkedPosts]= useState([]);
         <>
          <BrowserRouter>
          <Routes>
-        {user ? <Route path="/" exact component={<Authenticate />} /> : <Route path="*" exact component={<Homepage />} />}
+        {user ? <Route path="/" exact component={<Authenticate />} /> : <Route path="*" exact component={<Homepage post={post}/>} />}
         
         <Route path="*" element={<Navigate to="/" replace />} />
-            <Route path="/" element={<Homepage key={posts.id} post={posts} toggleBookmark={toggleBookmark}/>} />
-      {/* <Route path="/" exact component={<Homepage />} /> */}
+            <Route path="/" element={<Homepage key={post?.id} post={post} toggleBookmark={toggleBookmark}/>} />
+     
       <Route path="/Bookmark" element={<BookmarkPage toggleBookmark={toggleBookmark}/>} />
+      <Route path="/create new post" element={<Newpost onAddPost={handleAddPost}/>}/>
       </Routes>
     </BrowserRouter></>
       )}
