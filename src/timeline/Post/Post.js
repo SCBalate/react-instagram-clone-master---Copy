@@ -57,7 +57,7 @@ setBookmark(!bookMark)
           </div>
          
           <div className="post__iconSave">
-            <BookmarkBorderIcon className={bookMark ? 'removeBookmark-button postIcon' : ' addBookmark-button postIcon'} onClick={ toggleBookmark}   />
+            <BookmarkBorderIcon className={bookMark ? 'removeBookmark-button postIcon' : ' addBookmark-button postIcon'} onClick={() => toggleBookmark(post._id)}   />
           </div>
         </div>
          {count} likes

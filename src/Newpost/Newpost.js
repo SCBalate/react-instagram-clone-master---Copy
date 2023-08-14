@@ -1,6 +1,6 @@
 import React, { useState ,useCallback} from 'react';
 import { useDropzone } from 'react-dropzone';
-
+import { formatDate } from '../Backend/utils/authUtils';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
@@ -8,11 +8,12 @@ import { Button } from 'react-bootstrap';
 
 const NewPost = ({onAddPost}) => {
   const [post, setpost] = useState({
-    name: '',
-    url: '',
-    Ingredients: '',
-    Method: '',
+    content: '',
+    PostImage: '',
+    createdAt: formatDate(),
+    
   });
+
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -38,22 +39,27 @@ const NewPost = ({onAddPost}) => {
   
           // Handle the response from the server
           console.log('Upload successful!', response.data);
-        } catch (error) {
+        } 
+        catch (error) {
           console.error('Error uploading file:', error);
         }
       };
   
-      reader.readAsDataURL(selectedFile);
-    } catch (error) {
-      console.error('Error reading file:', error);
-    }
+    //   reader.readAsDataURL(selectedFile);
+    // } catch (error) {
+    //   console.error('Error reading file:', error);
+    // }
+    reader.readAsDataURL(selectedFile);
+  } catch (error) {
+    console.error('Error reading file:', error);
+  }
   }; 
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { content, value } = e.target;
     setpost((prevpost) => ({
       ...prevpost,
-      [name]: value,
+      [content]: value,
     }));
   };
 
@@ -61,10 +67,10 @@ const NewPost = ({onAddPost}) => {
     e.preventDefault();
     onAddPost(post);
     setpost({
-      name: '',
-      url: '',
+      content: '',
+      PostImage: '',
     Ingredients: [],
-    Method: []
+    createdAt: formatDate(),
     });
   };
 
@@ -72,14 +78,14 @@ const NewPost = ({onAddPost}) => {
     <form onSubmit={handleSubmit}>
       <h2>Add New post</h2>
       <div>
-        <label>Name:</label>
-        <input type="text" name="name" value={post.name} onChange={handleChange} required />
+        <label>Content</label>
+        <input type="text" name="content" value={post.content} onChange={handleChange} />
       </div>
       <div>
       <div>
       <h2>Image Uploader</h2>
       <div {...getRootProps()}>
-        <input {...getInputProps()} value={post.url}/>
+        <input {...getInputProps()} value={post.PostImage}/>
         {isDragActive ? (
           <p>Drop the image here...</p>
         ) : (
@@ -92,8 +98,8 @@ const NewPost = ({onAddPost}) => {
     </div>
      
     </div>
-      <div>
-        <label>Ingredients:</label>
+      {/* <div>
+        <label></label>
         <input
           type="text"
           name="Ingredients"
@@ -111,9 +117,9 @@ const NewPost = ({onAddPost}) => {
           onChange={handleChange}
           required
         />
-      </div>
+      </div> */}
      
-      <button type="submit">Add Recepie</button>
+      <button type="submit">Create Post</button>
     </form>
   );
 };

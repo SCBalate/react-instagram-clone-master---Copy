@@ -7,13 +7,16 @@ import { useEffect, useState } from "react";
 import { auth } from "./firebase";
 import { loginUser, setLoading } from "./features/userSlice";
 import { BrowserRouter, Route,Routes, Navigate } from 'react-router-dom';
-// import { posts } from "./Backend/db/posts";
 import Newpost from "./Newpost/Newpost";
 
 
 function App() {
   const dispatch = useDispatch();
-  const [post, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [newPost, setNewPost] = useState('');
+  const [editingPostId, setEditingPostId] = useState(null);
+  const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +24,7 @@ function App() {
         const response = await fetch('/api/posts');
         
         const jsonData = await response.json();
-        setPost(jsonData);
+        setPosts(jsonData);
         console.log(jsonData);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -30,7 +33,7 @@ function App() {
 
     fetchData();
   }, []);
-const[bookmarkPost,setBookmarkedPosts]= useState([]);
+
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
@@ -50,50 +53,57 @@ const[bookmarkPost,setBookmarkedPosts]= useState([]);
     });
   }, []);
 
-  const handleAddPost = (newPost) => {
+  // const handleAddPost = (newPost) => {
+  //   debugger
+  //   const postWithId = {
+  //     ...newPost,
+  //     id: Math.random().toString(), 
+  //     content:`${newPost?.content}`
+  //   };
+  //   setPost((prevPost) => [...prevPost, postWithId]);
+  // };
+  const handleAddPost = () => {
+    const addedPost = {  id: Math.random().toString(), content: newPost };
+    setPosts(prevPosts => [...prevPosts, addedPost]);
+    setNewPost('');
+  };
+
+  const handleEditPost = (postId) => {
+    const postToUpdate = posts.find(post => post.id === postId);
+    if (postToUpdate) {
+      setEditingPostId(postId);
+      setNewPost(postToUpdate.content);
+    }
+  };
+
+  const handleUpdatePost = () => {
+    const updatedPosts = posts.map(post =>
+      post.id === editingPostId ? { ...post, content: newPost } : post
+    );
+    setPosts(updatedPosts);
+    setEditingPostId(null);
+    setNewPost('');
+  };
+
+  const handleDeletePost = (postId) => {
+    const updatedPosts = posts.filter(post => post.id !== postId);
+    setPosts(updatedPosts);
+  };
+
+  const handleToggleBookmark = (postId,isArchived) => {
     debugger
-    const postWithId = {
-      ...newPost,
-      id: Math.random().toString(), 
-      name:`${newPost?.name}`
-    };
-    setPost((prevPosts) => [...prevPosts, postWithId]);
+    const postToToggle = posts?.posts?.find(post => post._id === postId);
+    if (postToToggle) {
+      if (postId.isArchived) {
+        const updatedBookmarkedPosts = bookmarkedPosts.filter(post => post._id !== postId);
+        setBookmarkedPosts(updatedBookmarkedPosts);
+      } else {
+        setBookmarkedPosts(prevPosts => [...prevPosts, postToToggle]);
+      }
+    }
   };
 
 
-  function toggleBookmark(postId) {
-    // Make an API request to toggle the bookmark status
-    fetch(`api/users/bookmark/:postId/`, { method: 'POST' })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Request failed with status ' + response.status);
-        }
-        return response.json();
-      })
-      .then(updatedPost => {
-        // Update the value of `isArchived` to true
-        updatedPost.isArchived = true;
-  
-        setBookmarkedPosts(prevPosts => {
-          // Check if the post already exists in the bookmarked posts list
-          const postIndex = prevPosts.findIndex(post => post._id === updatedPost._id);
-          if (postIndex !== -1) {
-            // Post already exists, update it in the list
-            const updatedPosts = [...prevPosts];
-            updatedPosts[postIndex] = updatedPost;
-            return updatedPosts;
-          } else {
-            // Post doesn't exist, add it to the list
-            return [...prevPosts, updatedPost];
-          }
-        });
-      })
-      .catch(error => {
-        console.error('Error toggling bookmark:', error);
-        // Handle the error and provide user feedback
-        // For example, you can show a toast notification or display an error message on the UI
-      });
-  }
   const user = useSelector((state) => state.data.user.user);
   const isLoading = useSelector((state) => state.data.user.isLoading);
   return (
@@ -106,12 +116,12 @@ const[bookmarkPost,setBookmarkedPosts]= useState([]);
         <>
          <BrowserRouter>
          <Routes>
-        {user ? <Route path="/" exact component={<Authenticate />} /> : <Route path="*" exact component={<Homepage post={post}/>} />}
+        {user ? <Route path="/" exact component={<Authenticate />} /> : <Route path="*" exact component={<Homepage post={posts}/>} />}
         
         <Route path="*" element={<Navigate to="/" replace />} />
-            <Route path="/" element={<Homepage key={post?.id} post={post} toggleBookmark={toggleBookmark}/>} />
+            <Route path="/" element={<Homepage key={posts?.id} post={posts} toggleBookmark={handleToggleBookmark}/>} />
      
-      <Route path="/Bookmark" element={<BookmarkPage toggleBookmark={toggleBookmark}/>} />
+      <Route path="/Bookmark" element={<BookmarkPage key={posts?.id} post={bookmarkedPosts} toggleBookmark={handleToggleBookmark}/>} />
       <Route path="/create new post" element={<Newpost onAddPost={handleAddPost}/>}/>
       </Routes>
     </BrowserRouter></>

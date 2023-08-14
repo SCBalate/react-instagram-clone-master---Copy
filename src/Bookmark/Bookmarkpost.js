@@ -38,30 +38,30 @@ import Post from "../timeline/Post/Post";
 //     );
 //   }
 
-function BookmarkedPosts({toggleBookmark}) {
+function BookmarkedPosts({toggleBookmark,key, post}) {
     const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
   
-    useEffect(() => {
-      fetchBookmarkedPosts();
-    }, []);
+    // useEffect(() => {
+    //   fetchBookmarkedPosts();
+    // }, []);
   
-    function fetchBookmarkedPosts() {
-      // Make an API request to fetch all posts
-      fetch('/api/posts')
-        .then(response => response.json())
-        .then(posts => {
-        //  console.log(posts)
-          const bookmarked = posts.posts.filter((x)=>x.isArchived);
-          // console.log(bookmarked);
-          setBookmarkedPosts(bookmarked);
-        });
-    }
+    // function fetchBookmarkedPosts() {
+    //   // Make an API request to fetch all posts
+    //   fetch('/api/users/bookmark')
+    //     .then(response => response.json())
+    //     .then(posts => {
+    //     //  console.log(posts)
+    //       const bookmarked = post.posts.filter((x)=>x.isArchived);
+    //       // console.log(bookmarked);
+    //       setBookmarkedPosts(bookmarked);
+    //     });
+    // }
  
     return (
       <div>
         <h2>Bookmarked Posts</h2>
-        {bookmarkedPosts.map(post => (
-          <Post key={post?._id} user={post?.username}  postImage={post?.postImage}
+        {post.map(post => (
+          <Post key={key} user={post?.username}  postImage={post?.postImage}
           likes={post?.likes}
           timestamp={post?.createdAt} toggleBookmark={toggleBookmark} />
         ))}
